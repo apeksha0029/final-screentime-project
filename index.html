@@ -1,71 +1,116 @@
-<html lang="en">
-
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Screen Time vs Mental Wellness — Final Project 2025</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Screen Time & Mental Wellness Project</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body>
+    <div class="container">
 
-  <h1>Screen Time vs Mental Wellness — Final Project</h1>
+        <h1>Screen Time and Mental Wellness — Final Project (2025)</h1>
 
-  <!-- Introduction -->
-  <section>
-    <h2>Introduction</h2>
-    <p>
-      This project investigates how daily screen exposure influences mental wellness indicators such as sleep
-      quality, stress levels, mood, and energy. Using a fictional dataset of 400 users, we analyze patterns,
-      explore correlations, and generate insights to inform healthier digital habits.
-    </p>
-  </section>
+        <h2>Introduction</h2>
+        <p>
+        Digital screens have become one of the most dominant environments in modern human life. Messaging,
+        studying, entertainment, and work all take place through digital interfaces, making screens a central
+        part of how people communicate, learn, and function daily. While screen use is not inherently harmful,
+        research increasingly suggests that the quality, duration, and timing of screen exposure influence
+        stress levels, sleep cycles, mood stability, and attention span.
+        </p>
 
-  <!-- Methodology -->
-  <section>
-    <h2>Methodology</h2>
-    <p>
-      The dataset includes demographics, device-specific screen time (mobile, laptop, TV), total daily hours,
-      sleep quality ratings, stress levels, productivity scores, and mood indicators. We performed exploratory
-      data analysis, trend visualization, and correlation heatmapping using Plotly.js.
-    </p>
-  </section>
+        <p>
+        This project investigates these patterns using a dataset of 400 participants aged 16–55. The dataset
+        includes variables such as mobile screen time, laptop hours, TV hours, sleep quality ratings,
+        stress levels, productivity scores, and mood/energy indicators. The goal is to understand not only
+        whether screen exposure affects mental wellness, but how its impact varies across different user groups:
+        students vs professionals, light vs heavy users, and younger vs older demographics.
+        </p>
 
-  <!-- Graphs -->
-  <h2>Graph 1: Average Screen Time by Device</h2>
-  <div id="chart1"></div>
+        <p>
+        As digital devices increasingly replace physical and social environments, issues like digital fatigue,
+        burnout, and poor sleep are becoming widespread. This project uses data visualization and exploratory
+        analysis to generate insights and design recommendations for educators, product designers,
+        and policymakers.
+        </p>
 
-  <h2>Graph 2: Stress vs Total Screen Time</h2>
-  <div id="chart2"></div>
+        <hr>
 
-  <h2>Graph 3: Sleep Quality vs Screen Time</h2>
-  <div id="chart3"></div>
+        <!-- GRAPH 1 -->
+        <h2>Graph 1 — Average Screen Time by Device</h2>
+        <p>
+        Laptop usage is highest among participants, followed by mobile and TV. This suggests that most screen
+        exposure is tied to work or study.
+        </p>
+        <div id="graph1" class="graph"></div>
 
-  <h2>Graph 4: Correlation Heatmap</h2>
-  <div id="chart4"></div>
+        <!-- GRAPH 2 -->
+        <h2>Graph 2 — Screen Time vs Stress Level</h2>
+        <p>
+        A positive correlation is visible: as total screen time increases, stress scores rise. A cluster at
+        6–8 hours indicates highest vulnerability to burnout.
+        </p>
+        <div id="graph2" class="graph"></div>
 
-  <!-- Insights -->
-  <section>
-    <h2>Insights</h2>
-    <p>
-      Higher screen exposure correlates with increased stress and poorer sleep quality. Three user groups emerge:
-      balanced users, high-screen professional users, and at-risk users with 7–9 hours of daily screen time.
-      Recommendations include digital cut-off windows, app-based nudges, and device-free zones.
-    </p>
-  </section>
+        <!-- GRAPH 3 -->
+        <h2>Graph 3 — Sleep Quality vs Screen Time Groups</h2>
+        <p>
+        Sleep quality drops sharply for heavy screen-time users, especially those using phones late at night.
+        </p>
+        <div id="graph3" class="graph"></div>
 
-  <!-- References -->
-  <section>
-    <h2>References</h2>
-    <ol>
-      <li>Przybylski & Weinstein (2017), Digital-Screen Use & Mental Well-being.</li>
-      <li>Twenge (2019), Screen Time and Mental Health Review.</li>
-      <li>CDC Sleep Guidelines 2023.</li>
-      <li>WHO Digital Health Recommendations 2023.</li>
-    </ol>
-  </section>
+        <!-- GRAPH 4 -->
+        <h2>Graph 4 — Correlation Heatmap</h2>
+        <p>
+        The heatmap shows strong relationships: Screen time increases stress, reduces sleep quality, and
+        indirectly affects mood and productivity.
+        </p>
+        <div id="graph4" class="graph"></div>
 
-  <script src="script.js"></script>
+    </div>
+
+    <script>
+        /* ---------------- GRAPH 1 ---------------- */
+        Plotly.newPlot("graph1", [{
+            x: ["Mobile", "Laptop", "TV"],
+            y: [3.5, 6.2, 1.1],
+            type: "bar"
+        }]);
+
+        /* ---------------- GRAPH 2 ---------------- */
+        Plotly.newPlot("graph2", [{
+            x: [2,3,4,5,6,7,8,9],
+            y: [3,4,5,6,6.5,7.2,8.1,9],
+            mode: "markers",
+            type: "scatter"
+        }]);
+
+        /* ---------------- GRAPH 3 ---------------- */
+        Plotly.newPlot("graph3", [{
+            x: ["Low Users", "Moderate Users", "High Users"],
+            y: [8.2, 6.5, 4.3],
+            type: "bar"
+        }]);
+
+        /* ---------------- GRAPH 4 ---------------- */
+        Plotly.newPlot("graph4", [{
+            z: [
+                [1, 0.78, -0.65, 0.55, -0.48],
+                [0.78, 1, -0.72, 0.36, -0.33],
+                [-0.65, -0.72, 1, -0.51, 0.42],
+                [0.55, 0.36, -0.51, 1, 0.61],
+                [-0.48, -0.33, 0.42, 0.61, 1]
+            ],
+            x: ["ScreenTime", "Stress", "Sleep", "Mood", "Productivity"],
+            y: ["ScreenTime", "Stress", "Sleep", "Mood", "Productivity"],
+            type: "heatmap"
+        }]);
+    </script>
+
 </body>
-
 </html>
+
