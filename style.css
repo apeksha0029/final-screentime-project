@@ -1,0 +1,19 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  background: #f7f9fc;
+}
+
+h1 {
+  text-align: center;
+  color: #0f172a;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+#chart1, #chart2, #chart3, #chart4 {
+  height: 450px;
+  margin-bottom: 40px;
+}
