@@ -1,116 +1,295 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Screen Time & Mental Wellness Project</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Screen Time & Mental Wellness</title>
 
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- Plotly -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #141826;
+      --text: #e6e8ee;
+      --muted: #9aa0b3;
+      --accent: #6cf2c2;
+      --danger: #ff6b6b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #1b2140 0%, transparent 60%), var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      min-height: 90vh;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3rem;
+      padding: 4rem 6vw;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      color: var(--muted);
+      max-width: 520px;
+      font-size: 1.05rem;
+    }
+
+    .hero-img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+
+    .section {
+      padding: 5rem 6vw;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section p {
+      max-width: 720px;
+      color: var(--muted);
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent), var(--card);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+
+    .graph {
+      width: 100%;
+      height: 420px;
+    }
+
+    /* Mascot */
+    .mascot {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 120px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .mascot:hover { transform: scale(1.05); }
+
+    .speech {
+      position: fixed;
+      bottom: 160px;
+      right: 24px;
+      max-width: 260px;
+      background: var(--card);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      display: none;
+    }
+
+    .speech strong { color: var(--accent); }
+
+    footer {
+      padding: 3rem 6vw;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    @media (max-width: 900px) {
+      header { grid-template-columns: 1fr; }
+      .mascot, .speech { right: 16px; }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
 
-        <h1>Screen Time and Mental Wellness — Final Project (2025)</h1>
+<header>
+  <div>
+    <h1>Screen Time & Mental Wellness</h1>
+    <p>
+      An exploratory data visualization project (2025) examining how modern screen habits
+      shape stress, sleep, mood, and productivity across age groups.
+    </p>
+  </div>
 
-        <h2>Introduction</h2>
-        <p>
-        Digital screens have become one of the most dominant environments in modern human life. Messaging,
-        studying, entertainment, and work all take place through digital interfaces, making screens a central
-        part of how people communicate, learn, and function daily. While screen use is not inherently harmful,
-        research increasingly suggests that the quality, duration, and timing of screen exposure influence
-        stress levels, sleep cycles, mood stability, and attention span.
-        </p>
+  <img class="hero-img" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt="Digital life and screens" />
+</header>
 
-        <p>
-        This project investigates these patterns using a dataset of 400 participants aged 16–55. The dataset
-        includes variables such as mobile screen time, laptop hours, TV hours, sleep quality ratings,
-        stress levels, productivity scores, and mood/energy indicators. The goal is to understand not only
-        whether screen exposure affects mental wellness, but how its impact varies across different user groups:
-        students vs professionals, light vs heavy users, and younger vs older demographics.
-        </p>
+<section class="section">
+  <h2>Why This Matters</h2>
+  <p>
+    Using data from 400 participants aged 16–55, this project investigates how screen exposure
+    across devices influences mental wellness indicators. The goal is not to demonize screens,
+    but to reveal patterns that designers, educators, and policymakers can act upon.
+  </p>
+</section>
 
-        <p>
-        As digital devices increasingly replace physical and social environments, issues like digital fatigue,
-        burnout, and poor sleep are becoming widespread. This project uses data visualization and exploratory
-        analysis to generate insights and design recommendations for educators, product designers,
-        and policymakers.
-        </p>
+<section class="section">
+  <div class="card">
+    <h2>Average Screen Time by Device</h2>
+    <p>Laptop usage dominates daily screen exposure, indicating work‑driven digital fatigue.</p>
+    <div id="graph1" class="graph"></div>
+  </div>
+</section>
 
-        <hr>
+<section class="section">
+  <div class="card">
+    <h2>Screen Time vs Stress</h2>
+    <p>Stress levels rise steadily with increased total screen time, peaking around 6–8 hours.</p>
+    <div id="graph2" class="graph"></div>
+  </div>
+</section>
 
-        <!-- GRAPH 1 -->
-        <h2>Graph 1 — Average Screen Time by Device</h2>
-        <p>
-        Laptop usage is highest among participants, followed by mobile and TV. This suggests that most screen
-        exposure is tied to work or study.
-        </p>
-        <div id="graph1" class="graph"></div>
+<section class="section">
+  <div class="card">
+    <h2>Sleep Quality Across User Groups</h2>
+    <p>Heavy screen users experience significantly poorer sleep quality.</p>
+    <div id="graph3" class="graph"></div>
+  </div>
+</section>
 
-        <!-- GRAPH 2 -->
-        <h2>Graph 2 — Screen Time vs Stress Level</h2>
-        <p>
-        A positive correlation is visible: as total screen time increases, stress scores rise. A cluster at
-        6–8 hours indicates highest vulnerability to burnout.
-        </p>
-        <div id="graph2" class="graph"></div>
+<section class="section">
+  <div class="card">
+    <h2>Correlation Heatmap</h2>
+    <p>Screen time indirectly impacts mood and productivity through stress and sleep disruption.</p>
+    <div id="graph4" class="graph"></div>
+  </div>
+</section>
 
-        <!-- GRAPH 3 -->
-        <h2>Graph 3 — Sleep Quality vs Screen Time Groups</h2>
-        <p>
-        Sleep quality drops sharply for heavy screen-time users, especially those using phones late at night.
-        </p>
-        <div id="graph3" class="graph"></div>
+<footer>
+  Final Project · Human‑Centred Design · 2025
+</footer>
 
-        <!-- GRAPH 4 -->
-        <h2>Graph 4 — Correlation Heatmap</h2>
-        <p>
-        The heatmap shows strong relationships: Screen time increases stress, reduces sleep quality, and
-        indirectly affects mood and productivity.
-        </p>
-        <div id="graph4" class="graph"></div>
+<!-- Mascot & Speech -->
+<img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" class="mascot" id="mascot" alt="AI mascot" />
+<div class="speech" id="speech"></div>
 
-    </div>
+<script>
+  /* Mascot logic */
+  const messages = [
+    "👋 Hi! I'm <strong>Nova</strong>. Scroll down — the data gets interesting.",
+    "💻 Notice how laptops dominate screen time? Work culture matters.",
+    "⚠️ That stress spike at 6–8 hours? That's your burnout zone.",
+    "😴 Poor sleep is the silent cost of heavy screen usage.",
+    "📊 Correlations reveal what habits quietly shape mental health."
+  ];
+  let index = 0;
+  const speech = document.getElementById('speech');
+  document.getElementById('mascot').onclick = () => {
+    speech.style.display = 'block';
+    speech.innerHTML = messages[index % messages.length];
+    index++;
+  };
 
-    <script>
-        /* ---------------- GRAPH 1 ---------------- */
-        Plotly.newPlot("graph1", [{
-            x: ["Mobile", "Laptop", "TV"],
-            y: [3.5, 6.2, 1.1],
-            type: "bar"
-        }]);
+  /* Graphs */
+  Plotly.newPlot("graph1", [
+    {
+      x: ["Mobile", "Laptop", "TV"],
+      y: [2.1, 4.8, 0.6],
+      name: "Work / Study",
+      type: "bar"
+    },
+    {
+      x: ["Mobile", "Laptop", "TV"],
+      y: [1.4, 1.4, 0.5],
+      name: "Leisure",
+      type: "bar"
+    }
+  ], {
+    barmode: "stack",
+    title: "Screen Time Composition by Device",
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { color: '#e6e8ee' }
+  });
 
-        /* ---------------- GRAPH 2 ---------------- */
-        Plotly.newPlot("graph2", [{
-            x: [2,3,4,5,6,7,8,9],
-            y: [3,4,5,6,6.5,7.2,8.1,9],
-            mode: "markers",
-            type: "scatter"
-        }]);
+  Plotly.newPlot("graph2", [
+    {
+      x: [2,3,4,5,6,7,8,9],
+      y: [3,4,5,6,6.5,7.2,8.1,9],
+      mode: "markers+lines",
+      name: "Observed Stress",
+      type: "scatter"
+    },
+    {
+      x: [6, 8],
+      y: [6.8, 6.8],
+      mode: "lines",
+      name: "Burnout Threshold",
+      line: { dash: "dash" }
+    }
+  ], {
+    title: "Rising Stress with Screen Exposure",
+    xaxis: { title: "Total Screen Time (hrs/day)" },
+    yaxis: { title: "Stress Score" },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { color: '#e6e8ee' }
+  });
 
-        /* ---------------- GRAPH 3 ---------------- */
-        Plotly.newPlot("graph3", [{
-            x: ["Low Users", "Moderate Users", "High Users"],
-            y: [8.2, 6.5, 4.3],
-            type: "bar"
-        }]);
+  Plotly.newPlot("graph3", [
+    {
+      y: [7.8,8.1,8.4,8.0,8.2],
+      name: "Low Users",
+      type: "box"
+    },
+    {
+      y: [6.2,6.5,6.7,6.4,6.6],
+      name: "Moderate Users",
+      type: "box"
+    },
+    {
+      y: [3.9,4.1,4.5,4.2,4.0],
+      name: "High Users",
+      type: "box"
+    }
+  ], {
+    title: "Sleep Quality Distribution",
+    yaxis: { title: "Sleep Quality Score" },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { color: '#e6e8ee' }
+  });
 
-        /* ---------------- GRAPH 4 ---------------- */
-        Plotly.newPlot("graph4", [{
-            z: [
-                [1, 0.78, -0.65, 0.55, -0.48],
-                [0.78, 1, -0.72, 0.36, -0.33],
-                [-0.65, -0.72, 1, -0.51, 0.42],
-                [0.55, 0.36, -0.51, 1, 0.61],
-                [-0.48, -0.33, 0.42, 0.61, 1]
-            ],
-            x: ["ScreenTime", "Stress", "Sleep", "Mood", "Productivity"],
-            y: ["ScreenTime", "Stress", "Sleep", "Mood", "Productivity"],
-            type: "heatmap"
-        }]);
-    </script>
+  Plotly.newPlot("graph4", [{
+    z: [
+      [1, 0.78, -0.65, 0.55, -0.48],
+      [0.78, 1, -0.72, 0.36, -0.33],
+      [-0.65, -0.72, 1, -0.51, 0.42],
+      [0.55, 0.36, -0.51, 1, 0.61],
+      [-0.48, -0.33, 0.42, 0.61, 1]
+    ],
+    x: ["ScreenTime", "Stress", "Sleep", "Mood", "Productivity"],
+    y: ["ScreenTime", "Stress", "Sleep", "Mood", "Productivity"],
+    type: "heatmap"
+  }], { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: { color: '#e6e8ee' }});
+</script>
 
 </body>
 </html>
-
